@@ -2,7 +2,7 @@ class PostsController < ApplicationController
 
   before_action :authenticate_user
    before_action :ensure_correct_user, {only: [:edit, :update, :destroy]}
-   
+
   def index
     @posts =  Post.all.order(created_at: :desc)
   end
@@ -10,6 +10,7 @@ class PostsController < ApplicationController
   def show
     @post = Post.find_by(id: params[:id])
     @user = @post.user
+    @likes_count = Like.where(post_id: @post.id).count
   end
 
   def new
